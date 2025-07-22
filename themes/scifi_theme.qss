@@ -1,0 +1,346 @@
+/*
+ * Cyberpunk Sci-Fi Theme - Final Version
+ * Designer: Gemini
+ * Date: 2025-07-16
+ */
+
+/* --- Main Window & Page Layout --- */
+QMainWindow {
+    background-image: url(scifi.png); /* Keep existing background image */
+    background-color: #0A0A1A; /* Deep Dark Blue-Purple Fallback */
+}
+
+#PageFrame, QStackedWidget > QWidget {
+    background-color: #1A1A2A; /* Main content area background - slightly lighter */
+    margin: 0px 10px 15px 10px;
+    border-radius: 0px; /* Sharp corners */
+    border: 1px solid #303040; /* Dark, subtle structural border */
+}
+
+QWidget {
+    color: #ADD8E6; /* Light Blue/Cyan Text */
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 11pt;
+    border: none;
+}
+
+/* --- Menu Bar & Dropdown Menus --- */
+QMenuBar {
+    background-color: #2A2A3A; /* Slightly lighter than frame */
+    color: #ADD8E6;
+    padding: 2px;
+    border-bottom: 1px solid #303040;
+}
+QMenuBar::item {
+    padding: 6px 10px;
+}
+QMenuBar::item:selected {
+    background-color: #3A3A4A; /* Darker hover for menu items */
+}
+QMenu {
+    background-color: #2A2A3A;
+    color: #ADD8E6;
+    border: 1px solid #00FFFF; /* Electric Cyan border for menu popups */
+    padding: 5px;
+}
+QMenu::item {
+    padding: 6px 24px;
+}
+QMenu::item:selected {
+    background-color: #FF00FF; /* Bright Magenta accent for selection */
+    color: #0A0A1A; /* Dark text on bright selection */
+}
+QMenu::separator {
+    height: 1px;
+    background: #404050; /* A slightly lighter divider */
+    margin: 4px 0px;
+}
+
+/* --- Containers & Frames --- */
+QFrame#CardFrame {
+    background-color: #2A2A3A; /* Consistent with Menu Bar / darker sections */
+    border: 1px solid #3A3A4A; /* Darker border */
+    border-radius: 0px; /* Sharp corners */
+}
+
+QScrollArea, QTabWidget::pane {
+    background-color: transparent;
+    border: none;
+}
+QStatusBar {
+    background-color: #2A2A3A;
+    color: #E0FFFF; /* Bright cyan for status bar */
+}
+QSplitter::handle {
+    background-color: #404050; /* Matches menu separator for handles */
+}
+QSplitter::handle:hover {
+    background-color: #505060;
+}
+
+/* --- Input Widgets & Views --- */
+QDateEdit, QLineEdit, QTextEdit, QTextBrowser { /* QComboBox handled separately below */
+    background-color: #1A1A2A; /* Matches PageFrame background */
+    border: 1px solid #00FFFF; /* Electric Cyan border */
+    border-radius: 0px; /* Sharp corners */
+    padding: 6px;
+    color: #E0FFFF; /* Brightest cyan for input text */
+}
+QDateEdit:focus, QLineEdit:focus, QTextEdit:focus, QTextBrowser:focus {
+    border: 1px solid #FF00FF; /* Bright Magenta focus border */
+}
+QDateEdit:disabled, QLineEdit:disabled, QTextEdit:disabled, QTextBrowser:disabled {
+    background-color: #0A0A1A; /* Darkest disabled background */
+    color: #808090; /* Dimmed text */
+    border-color: #303040;
+}
+
+QComboBox { /* Styled like other inputs, but with specific dropdown rules */
+    background-color: #1A1A2A;
+    border: 1px solid #00FFFF;
+    border-radius: 0px;
+    padding: 6px;
+    padding-right: 25px; /* Padding for space where arrow *would* be */
+    color: #E0FFFF; /* This color affects the text */
+}
+QComboBox:focus {
+    border: 1px solid #FF00FF;
+}
+QComboBox:disabled {
+    background-color: #0A0A1A;
+    color: #808090;
+    border-color: #303040;
+}
+QComboBox::drop-down { /* Styles the dropdown button itself */
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border: none; /* Remove border */
+    /* border-left: 1px solid #00FFFF; Uncomment for a separator line */
+    border-top-right-radius: 0px; /* Sharp corners */
+    border-bottom-right-radius: 0px;
+    background-color: transparent; /* Make background transparent to blend with QComboBox */
+    image: none; /* Explicitly remove any default or custom arrow image */
+}
+QComboBox::drop-down:hover {
+    background-color: rgba(0, 255, 255, 0.2); /* Subtle hover effect with cyan tint */
+}
+
+QComboBox QAbstractItemView {
+    background-color: #1A1A2A; /* Consistent with input backgrounds */
+    border: 1px solid #00FFFF; /* Electric Cyan border */
+    selection-background-color: #FF00FF; /* Magenta selection */
+    selection-color: #0A0A1A; /* Dark text on bright selection */
+    outline: 0px;
+    color: #E0FFFF; /* Item text color */
+}
+
+QTableWidget, QTreeWidget {
+    background-color: #1A1A2A; /* Matches PageFrame background */
+    border: 1px solid #303040; /* Dark structural border */
+    gridline-color: #404050; /* Slightly lighter grid lines */
+}
+QHeaderView::section {
+    background-color: #2A2A3A; /* Consistent with CardFrame/Menu Bar */
+    color: #00FFFF; /* Electric Cyan for headers */
+    padding: 5px;
+    border: 1px solid #303040; /* Border for header sections */
+    font-weight: bold;
+}
+QTableWidget::item:selected, QTreeWidget::item:selected {
+    background-color: rgba(255, 0, 255, 0.3); /* Faded Magenta selection */
+    color: #E0FFFF; /* Ensure selected text is visible */
+}
+
+/* --- Checkbox (Image-Free) --- */
+QCheckBox {
+    spacing: 10px;
+    color: #ADD8E6; /* Consistent with general text */
+}
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #00FFFF; /* Electric Cyan border */
+    border-radius: 0px; /* Sharp corners */
+    background-color: #2A2A3A; /* Dark background */
+}
+QCheckBox::indicator:hover {
+    border-color: #FF00FF; /* Magenta on hover */
+}
+QCheckBox::indicator:checked {
+    background-color: #FF00FF; /* Solid Magenta when checked */
+    border-color: #FF00FF;
+    image: none; /* Explicitly remove any default or inherited image */
+}
+QCheckBox::indicator:checked:hover {
+    background-color: #FF80FF; /* Lighter Magenta on checked hover */
+    border-color: #FF80FF;
+}
+QCheckBox::indicator:disabled {
+    background-color: #0A0A1A;
+    border-color: #303040;
+}
+
+
+/* --- Tabs --- */
+QTabBar::tab {
+    background-color: #2A2A3A; /* Dark tab background */
+    color: #ADD8E6; /* Light blue text */
+    padding: 8px 22px;
+    border: 1px solid #00FFFF; /* Cyan border */
+    border-bottom: none; /* No bottom border for tabs */
+    border-top-left-radius: 0px; /* Sharp corners */
+    border-top-right-radius: 0px;
+}
+QTabBar::tab:hover {
+    background-color: #3A3A4A;
+}
+QTabBar::tab:selected {
+    background-color: #1A1A2A; /* Matches the page background */
+    color: #FF00FF; /* Magenta text for selected tab */
+    font-weight: bold;
+    border-top: 2px solid #FF00FF; /* Magenta top border for selected tab */
+    border-left: 1px solid #FF00FF;
+    border-right: 1px solid #FF00FF;
+}
+
+/* --- Buttons --- */
+QPushButton {
+    background-color: #3A3A4A; /* General button background */
+    color: #00FFFF; /* Electric Cyan text */
+    border: 1px solid #00FFFF; /* Electric Cyan border */
+    padding: 7px 14px;
+    border-radius: 0px; /* Sharp corners */
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #4A4A5A;
+    border-color: #FF00FF; /* Magenta on hover */
+    color: #FF00FF;
+}
+QPushButton:pressed {
+    background-color: #1A1A2A; /* Darker on press */
+    border-color: #FF00FF;
+}
+QPushButton:disabled {
+    background-color: #0A0A1A;
+    color: #808090;
+    border-color: #303040;
+}
+
+/* App-specific Buttons */
+QPushButton#NextButton, QPushButton#FinishButton, QPushButton#SaveHomeButton, QPushButton#DetailsButton, QPushButton#VendorButton {
+    background-color: #FF00FF; /* Bright Magenta for primary actions */
+    color: #0A0A1A; /* Dark text on bright button */
+    border: 1px solid #00FFFF; /* Cyan border */
+}
+QPushButton#NextButton:hover, QPushButton#FinishButton:hover, QPushButton#SaveHomeButton:hover, QPushButton#DetailsButton:hover, QPushButton#VendorButton:hover {
+    background-color: #00FFFF; /* Electric Cyan on hover */
+    color: #0A0A1A;
+    border-color: #FF00FF;
+}
+QPushButton#ExitButton {
+    background-color: #FF8C00; /* Vibrant Orange for Exit */
+    color: #0A0A1A;
+    border: 1px solid #FF00FF; /* Magenta border */
+}
+QPushButton#ExitButton:hover {
+    background-color: #FF00FF; /* Magenta on hover */
+    color: #0A0A1A;
+    border-color: #FF8C00;
+}
+
+/* --- Other Widgets --- */
+QDialog, QMessageBox, QProgressDialog {
+    background-color: #2A2A3A;
+    color: #ADD8E6;
+    border: 1px solid #00FFFF; /* Cyan border for dialogs */
+    border-radius: 0px; /* Sharp corners */
+}
+QScrollBar:vertical, QScrollBar:horizontal {
+    border: none;
+    background: #0A0A1A; /* Dark scrollbar track */
+    width: 12px;
+    margin: 0px;
+}
+QScrollBar::handle {
+    background: #3A3A4A; /* Darker handle */
+    min-height: 25px;
+    border-radius: 0px; /* Sharp handle */
+    border: 1px solid #00FFFF; /* Cyan border */
+}
+QScrollBar::handle:hover {
+    background: #4A4A5A;
+    border-color: #FF00FF; /* Magenta on hover */
+}
+
+/* QDateEdit's internal Calendar Widget Styling - REFINED */
+QCalendarWidget {
+    background-color: #1A1A2A; /* Base background of calendar widget */
+    color: #ADD8E6; /* Default text color for days */
+    border: 1px solid #00FFFF; /* Electric Cyan border around calendar popup */
+    border-radius: 0px; /* Sharp corners */
+}
+
+QCalendarWidget QToolButton { /* Styling for the navigation buttons (arrows, month/year display) */
+    background-color: #2A2A3A; /* Darker shade for buttons */
+    color: #00FFFF; /* Electric Cyan text */
+    border: 1px solid #FF00FF; /* Magenta border */
+    border-radius: 0px; /* Sharp corners */
+    padding: 3px;
+    font-weight: bold; /* Make navigation text bold */
+}
+QCalendarWidget QToolButton:hover {
+    background-color: #3A3A4A; /* Darker on hover */
+    border-color: #00FFFF; /* Cyan on hover */
+}
+QCalendarWidget QToolButton:pressed {
+    background-color: #1A1A2A; /* Even darker on pressed */
+}
+QCalendarWidget QToolButton:disabled {
+    color: #808090; /* Dim disabled buttons */
+    background-color: #0A0A1A;
+    border-color: #303040;
+}
+
+QCalendarWidget QMenu { /* Styling for the month/year dropdown menus that appear from QToolButton */
+    background-color: #2A2A3A; /* Matches menu bar/dialog background */
+    color: #ADD8E6; /* Light blue text */
+    border: 1px solid #00FFFF;
+    selection-background-color: #FF00FF; /* Magenta accent for selection */
+    selection-color: #0A0A1A; /* Dark text on bright selection */
+}
+
+QCalendarWidget QWidget#qt_calendar_navigationbar { /* The horizontal bar containing navigation buttons */
+    background-color: #2A2A3A; /* Matches menu bar/card frame for consistency */
+    border-bottom: 1px solid #00FFFF; /* Electric Cyan separator below nav bar */
+    border-top-left-radius: 0px; /* Match calendar corner radius */
+    border-top-right-radius: 0px;
+}
+
+QCalendarWidget QAbstractItemView { /* Styling for the grid of days (numbers) */
+    background-color: #1A1A2A; /* Matches input fields for consistency */
+    color: #ADD8E6; /* Default day number color */
+    selection-background-color: rgba(255, 0, 255, 0.3); /* Faded Magenta accent for selected day */
+    selection-color: #E0FFFF; /* Bright text on selected day */
+    outline: 0px; /* Remove focus outline */
+    gridline-color: #303040; /* Dark grid lines between days */
+}
+
+QCalendarWidget QAbstractItemView:disabled {
+    color: #808090; /* Dim disabled dates (e.g., days from previous/next month) */
+}
+
+/* Also ensure header for days of week has good contrast */
+QCalendarWidget QAbstractItemView QHeaderView::section {
+    background-color: #2A2A3A; /* Header background */
+    color: #00FFFF; /* Header text color */
+    border: none; /* No border for header sections */
+}
+QToolButton#UserIconMenuBarButton {
+    background-color: #333;
+    border-radius: 15px; /* Makes it round */
+}
+QToolButton#UserIconMenuBarButton:hover {
+    background-color: #444;
+}

@@ -1,0 +1,285 @@
+/*
+ * Brushed Metal Theme - Definitive Version (Image-Free Checkboxes & Qt Default Dropdown Arrow)
+ * Designer: Gemini (Modified from original by Protik Das)
+ * Date: 2025-07-16
+ */
+
+/* --- Main Window & Page Layout --- */
+QMainWindow {
+    background-image: url(brushed_metal.png);
+    background-color: #DCDCDC; /* Fallback color */
+}
+
+#PageFrame, QStackedWidget > QWidget {
+    background-color: #E9E9E9; /* Main content area background */
+    margin: 0px 10px 15px 10px; /* Creates the "space below" */
+    border-radius: 4px;
+}
+
+QWidget {
+    color: #111111;
+    font-family: "Segoe UI", "Arial", sans-serif;
+    font-size: 11pt;
+    border: none;
+}
+
+/* --- Menu Bar & Dropdown Menus --- */
+QMenuBar {
+    background-color: #DCDCDC;
+    color: #111;
+    padding: 2px;
+}
+QMenuBar::item {
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+QMenuBar::item:selected {
+    background-color: #CCCCCC;
+}
+QMenu {
+    background-color: #E9E9E9;
+    color: #111;
+    border: 1px solid #AAAAAA;
+    padding: 5px;
+}
+QMenu::item {
+    padding: 6px 24px;
+    border-radius: 4px;
+}
+QMenu::item:selected {
+    background-color: #337AB7; /* Blue accent for selection */
+    color: #FFFFFF;
+}
+QMenu::separator {
+    height: 1px;
+    background: #DCDCDC;
+    margin: 4px 0px;
+}
+
+/* --- Containers & Frames --- */
+QFrame#CardFrame {
+    background-color: #F5F5F5;
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+}
+
+QScrollArea, QTabWidget::pane {
+    background-color: transparent;
+    border: none;
+}
+QStatusBar {
+    background-color: #DCDCDC;
+    color: #111111; /* Ensure status bar text is visible */
+}
+QSplitter::handle {
+    background-color: #CCCCCC;
+}
+QSplitter::handle:hover {
+    background-color: #AAAAAA;
+}
+
+/* --- Input Widgets & Views --- */
+QDateEdit, QLineEdit, QTextEdit, QTextBrowser { /* QComboBox handled separately for dropdown */
+    background-color: #FFFFFF;
+    border: 1px solid #AAAAAA;
+    color: #111;
+    padding: 6px;
+    border-radius: 3px;
+}
+QDateEdit:focus, QLineEdit:focus, QTextEdit:focus, QTextBrowser:focus {
+    border: 1px solid #337AB7; /* Blue focus border */
+}
+QDateEdit:disabled, QLineEdit:disabled, QTextEdit:disabled, QTextBrowser:disabled {
+    background-color: #E0E0E0;
+    color: #999999;
+}
+
+QComboBox { /* Styled like other inputs, but with specific dropdown rules */
+    background-color: #FFFFFF;
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    padding: 6px;
+    color: #111; /* Ensure text and default arrow are visible */
+}
+QComboBox:focus {
+    border: 1px solid #337AB7;
+}
+QComboBox:disabled {
+    background-color: #E0E0E0;
+    color: #999999;
+}
+QComboBox::drop-down { /* Styles the dropdown button itself */
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-left: 1px solid #AAAAAA;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background-color: #E9E9E9; /* Light gray for the dropdown button */
+    /* REMOVED: Explicit 'image: none;' or 'image: url();' to allow Qt default drawing */
+}
+QComboBox::drop-down:hover {
+    background-color: #DCDCDC;
+}
+/* REMOVED: Any QComboBox::down-arrow styling to allow Qt default drawing */
+
+QComboBox QAbstractItemView {
+    background-color: #FFFFFF;
+    border: 1px solid #AAAAAA;
+    selection-background-color: #337AB7;
+    selection-color: #FFFFFF;
+    outline: 0px;
+}
+
+QTableWidget, QTreeWidget {
+    background-color: #FFFFFF;
+    border: 1px solid #AAAAAA;
+    gridline-color: #DDDDDD;
+}
+QHeaderView::section {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #F0F0F0, stop:1 #E0E0E0);
+    color: #333333;
+    padding: 5px;
+    border: 1px solid #AAAAAA;
+    font-weight: bold;
+}
+QTableWidget::item:selected, QTreeWidget::item:selected {
+    background-color: #337AB7;
+    color: #FFFFFF;
+}
+
+/* --- Checkbox (Image-Free) --- */
+QCheckBox {
+    spacing: 10px;
+    color: #111111; /* Ensure checkbox text is visible */
+}
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #337AB7; /* Blue border */
+    border-radius: 3px;
+    background-color: #FFFFFF; /* White background when unchecked */
+}
+QCheckBox::indicator:hover {
+    border-color: #286090; /* Darker blue on hover */
+}
+QCheckBox::indicator:checked {
+    background-color: #337AB7; /* Solid blue when checked */
+    border-color: #337AB7;
+    image: url(); /* Explicitly remove any default or inherited image */
+}
+QCheckBox::indicator:checked:hover {
+    background-color: #286090; /* Darker blue on checked hover */
+    border-color: #286090;
+}
+QCheckBox::indicator:disabled {
+    background-color: #E0E0E0;
+    border-color: #999999;
+}
+
+
+/* --- Tabs --- */
+QTabBar::tab {
+    background-color: #DCDCDC;
+    color: #333;
+    padding: 8px 22px;
+    border: 1px solid #AAAAAA;
+    border-bottom: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+QTabBar::tab:hover {
+    background-color: #E0E0E0;
+}
+QTabBar::tab:selected {
+    background-color: #E9E9E9; /* Matches the page background */
+    font-weight: bold; /* Added for consistency with other "bug-free" themes */
+}
+
+/* --- Buttons --- */
+QPushButton {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFFFFF, stop:1 #E9E9E9);
+    color: #333333;
+    border: 1px solid #999999;
+    padding: 7px 14px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    border-color: #666666;
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFFFFF, stop:1 #F0F0F0);
+}
+QPushButton:pressed {
+    background-color: #DCDCDC;
+}
+QPushButton:disabled {
+    background-color: #DCDCDC;
+    color: #888888;
+}
+
+/* App-specific Buttons */
+QPushButton#NextButton, QPushButton#FinishButton {
+    background-color: #5CB85C; /* Green for sequence actions */
+    color: white;
+    border-color: #4CAE4C;
+}
+QPushButton#NextButton:hover, QPushButton#FinishButton:hover {
+    background-color: #4CAF50;
+}
+QPushButton#SaveHomeButton, QPushButton#DetailsButton, QPushButton#VendorButton {
+    background-color: #337AB7; /* Blue for primary actions */
+    color: #FFFFFF;
+    border-color: #2e6da4;
+}
+QPushButton#SaveHomeButton:hover, QPushButton#DetailsButton:hover, QPushButton#VendorButton:hover {
+    background-color: #286090;
+}
+QPushButton#ExitButton {
+    background-color: #D9534F; /* Red for destructive actions */
+    color: #FFFFFF;
+    border-color: #d43f3a;
+}
+QPushButton#ExitButton:hover {
+    background-color: #C9302C;
+}
+
+/* --- Other Widgets --- */
+QDialog, QMessageBox, QProgressDialog {
+    background-color: #F5F5F5;
+}
+QScrollBar:vertical, QScrollBar:horizontal {
+    border: none;
+    background: #E9E9E9;
+    width: 12px;
+    margin: 0px;
+}
+QScrollBar::handle {
+    background: #CCCCCC;
+    min-height: 25px;
+    border-radius: 6px;
+}
+QScrollBar::handle:hover {
+    background: #BBBBBB;
+}
+
+/* QDateEdit's internal Calendar Widget Styling */
+QCalendarWidget {
+    background-color: #F5F5F5;
+    color: #111;
+}
+QCalendarWidget QToolButton {
+    color: #111;
+}
+QCalendarWidget QToolButton:hover {
+    background-color: #CCCCCC;
+}
+QCalendarWidget QMenu { /* Added to ensure consistent dropdown for month/year in calendar */
+    background-color: #E9E9E9;
+    color: #111;
+    border: 1px solid #AAAAAA;
+}
+QCalendarWidget QAbstractItemView { /* Added for the days grid in calendar */
+    selection-background-color: #337AB7;
+    selection-color: #FFFFFF;
+    outline: 0px;
+}
