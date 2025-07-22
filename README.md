@@ -4,7 +4,9 @@
 <h1 align="center">WORKFLOW</h1>
 
 <p align="center">
+  <a href="https://protik1810.github.io/WorkFlow/"><img alt="Website" src="https://img.shields.io/badge/Website-Online-brightgreen"></a>
   <img alt="License" src="https://img.shields.io/badge/License-GPLv3-blue.svg">
+  <img alt="Platform" src="https://img.shields.io/badge/Platform-Windows-0078D6?logo=windows">
   <img alt="Python Version" src="https://img.shields.io/badge/Python-3.12-3776AB?logo=python">
   <img alt="Framework" src="https://img.shields.io/badge/UI-PyQt6-41CD52?logo=qt">
 </p>
@@ -22,18 +24,16 @@
 * **Financial Tracking**: Keep a detailed record of client transactions and vendor payments to monitor project profitability in real-time.
 * **Document Management**: Upload and link all relevant documents—from proposals and work orders to invoices and challans—directly to your projects.
 * **User Management**: Secure user authentication with login, signup, profile locking, and customizable user profiles.
-* **Cross-Platform**: A single codebase that runs as a native application on both **Windows** and **Linux**.
-* **Custom Theming**: Switch between multiple light and dark themes to customize the application's appearance.
-* **AI-Powered Summaries**: Leverage an offline, local LLM to generate intelligent summaries of complex project details.
+* **Native Windows Experience**: Designed to be fast and reliable on your Windows PC.
+* **Custom Theming**: Switch between multiple light and dark themes for a personalized experience.
 
 ## 📥 Downloads
 
-You can download the latest pre-compiled version of WORKFLOW for your operating system from the **[Releases Page](https://github.com/Protik1810/WorkFlow/releases)**.
+You can download the latest pre-compiled version of WORKFLOW for Windows from the **[Releases Page](https://github.com/Protik1810/WorkFlow/releases)**.
 
 * **[Download for Windows (.exe)](https://github.com/Protik1810/WorkFlow/releases/latest/download/WORKFLOW_Setup_v2.0.0.exe)**
 
-
-*(Note: You will need to upload your installer and AppImage files to the "Releases" section of your GitHub repository for these links to work.)*
+*(Note: You will need to upload your installer to the "Releases" section of your GitHub repository for this link to work.)*
 
 ## 🚀 Running from Source
 
@@ -42,14 +42,11 @@ To run the application from the source code, follow these steps:
 1.  **Prerequisites**
     * Python 3.12
     * Git
-    * For **Ubuntu/Linux**, install required system libraries:
-        ```bash
-        sudo apt-get update && sudo apt-get install python3-tk libxcb-cursor0
-        ```
 
 2.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/Protik1810/WorkFlow.git]
+    git clone [https://github.com/Protik1810/WorkFlow.git](https://github.com/Protik1810/WorkFlow.git)
+    cd WorkFlow
     ```
 
 3.  **Install dependencies:**
@@ -68,7 +65,6 @@ To run the application from the source code, follow these steps:
 * **GUI**: PyQt6
 * **Database**: SQLite
 * **Installer (Windows)**: Inno Setup
-* **Package (Linux)**: AppImage
 
 ## 📄 License
 
