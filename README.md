@@ -33,7 +33,7 @@ You can download the latest pre-compiled version of WORKFLOW for Windows from th
 
 * **[Download for Windows (.exe)](https://github.com/Protik1810/WorkFlow/releases/latest/download/WORKFLOW_Setup_v2.0.0.exe)**
 
-WEBSITE : **[protik1810.github.io/WorkFlow](https://protik1810.github.io/WorkFlow/)** 
+Website : **[protik1810.github.io/WorkFlow](https://protik1810.github.io/WorkFlow/)** 
 
 ## 🚀 Running from Source
 
