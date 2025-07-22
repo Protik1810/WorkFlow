@@ -31,7 +31,7 @@
 You can download the latest pre-compiled version of WORKFLOW for your operating system from the **[Releases Page](https://github.com/Protik1810/WorkFlow/releases)**.
 
 * **[Download for Windows (.exe)](https://github.com/Protik1810/WorkFlow/releases/latest/download/WORKFLOW_Setup_v2.0.0.exe)**
-* **[Download for Linux (.AppImage)](https://github.com/Protik1810/WorkFlow/releases/latest/download/WORKFLOW-x86_64.AppImage)**
+
 
 *(Note: You will need to upload your installer and AppImage files to the "Releases" section of your GitHub repository for these links to work.)*
 
@@ -49,8 +49,7 @@ To run the application from the source code, follow these steps:
 
 2.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/Protik1810/WorkFlow.git](https://github.com/Protik1810/WorkFlow.git)
-    cd WorkFlow
+    git clone [https://github.com/Protik1810/WorkFlow.git]
     ```
 
 3.  **Install dependencies:**
