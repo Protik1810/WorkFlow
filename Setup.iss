@@ -12,10 +12,16 @@ OutputDir=D:\update\Output
 OutputBaseFilename=WORKFLOW_Setup_v2.0.0
 SetupIconFile=D:\update\installation.ico
 
-; --- ADD THESE TWO LINES ---
+
+; Allows 64-bit mode on x64 systems, otherwise stays in 32-bit mode
+ArchitecturesInstallIn64BitMode=x64
+; Allows the installer to run on both 32-bit and 64-bit Windows
+ArchitecturesAllowed=x86 x64
+
+
 WizardImageFile=D:\update\logob.bmp 
 WizardSmallImageFile=D:\update\logo .bmp
-; --- END OF ADDITION ---
+
 
 Compression=lzma
 SolidCompression=yes
