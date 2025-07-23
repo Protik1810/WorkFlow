@@ -12,8 +12,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-# This file marks the 'ui' directory as a Python package.
-# It remains empty as no package-level initialization is required here.
 
 import sys
 import os
@@ -415,24 +413,27 @@ class HomeView(PageFrame):
         for i, p in enumerate(projects):
             dept_info = utils.get_department_by_id(self.controller.departments_db_path, p.get('departmentId'))
             department_name = dept_info['name'] if dept_info else "N/A"
-            status = p.get('status', 'N/A')
+            
+            # --- THIS IS THE CHANGE ---
+            # Call the new controller method to get a detailed status
+            status = self.controller.get_detailed_status(p)
             
             item = QTreeWidgetItem([
                 str(i + 1), 
                 p.get('projectName', 'N/A'), 
                 department_name, 
                 p.get('projectLead', 'N/A'), 
-                status
+                status  # Use the new detailed status string
             ])
             item.setData(0, Qt.ItemDataRole.UserRole, p.get('id'))
             
-            # --- ADDED: Color logic for status ---
+            # Color logic for base status
+            base_status = p.get('status', 'PENDING')
             status_column_index = 4
-            if status == "FULFILLED":
+            if base_status == "FULFILLED":
                 item.setForeground(status_column_index, QBrush(QColor("darkgreen")))
-            elif status == "PARTIALLY_FULFILLED":
+            elif base_status == "PARTIALLY_FULFILLED":
                 item.setForeground(status_column_index, QBrush(QColor("darkorange")))
-            # "PENDING" will use the default text color
             
             self.project_tree.addTopLevelItem(item)
             
