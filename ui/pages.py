@@ -3288,12 +3288,21 @@ class ProjectCreationPreview(PageFrame):
                     doc_child.setData(0, Qt.ItemDataRole.UserRole, doc)
                     doc_child.setForeground(1, QBrush(QColor("#0969DA")))
                     doc_child.setToolTip(1, "Double-click to open file")
-            docs_item.setExpanded(True)
+            docs_item.setExpanded(False)
 
         # --- General Information ---
         gen_cat = add_category("General Information")
         add_row(gen_cat, "Project Name", project.get('projectName', 'N/A'))
         add_row(gen_cat, "Project Lead", project.get('projectLead', 'N/A'))
+        
+        # MODIFIED: Determine and display the project type
+        project_type = "Normal"
+        if project.get('isLimitedTenderProject'):
+            project_type = "Limited Tender"
+        elif project.get('isTenderProject'):
+            project_type = "Open Tender"
+        add_row(gen_cat, "Project Type", project_type)
+        
         add_row(gen_cat, "Status", project.get('status', 'N/A'))
         add_row(gen_cat, "Project Folder", project.get('projectFolderPath', 'N/A'))
 
@@ -3305,6 +3314,41 @@ class ProjectCreationPreview(PageFrame):
         add_row(dept_cat, "Memo Date", dept_details.get('memoDate', 'N/A'))
         add_docs(dept_cat, "Enquiry Documents", project.get('departmentEnquiryDetails', {}).get('documents', []))
 
+        # --- NEW: Conditional Tender Details Section ---
+        if project_type != "Normal":
+            tender_cat = add_category("Tender & Bidding Details")
+            
+            if project_type == "Limited Tender":
+                ltd_details = project.get('limitedTenderDetails', {})
+                add_docs(tender_cat, "Tender Notice Documents", ltd_details.get('tenderNoticeDocs', []))
+                
+                bidders_parent = QTreeWidgetItem(tender_cat, ["Bidders / Comparative Statement", f"{len(ltd_details.get('bidders', []))} participant(s)"])
+                winner_name = ltd_details.get('winner')
+                sorted_bidders = sorted(ltd_details.get('bidders', []), key=lambda b: b.get('price', float('inf')))
+
+                for bidder in sorted_bidders:
+                    is_winner = bidder.get('name') == winner_name
+                    display_text = f"{bidder.get('name')} - Price: {bidder.get('price', 0):,.2f} INR {'✅ Winner' if is_winner else ''}"
+                    bidder_item = QTreeWidgetItem(bidders_parent, [display_text, ""])
+                    if is_winner:
+                        font = bidder_item.font(0); font.setBold(True); bidder_item.setFont(0, font)
+                    add_docs(bidder_item, "Submitted Documents", bidder.get('docs', []))
+
+            elif project_type == "Open Tender":
+                otd_details = project.get('tenderDetails', {})
+                add_docs(tender_cat, "Tender Notice Documents", otd_details.get('tenderNoticeDocs', []))
+                
+                bidders_parent = QTreeWidgetItem(tender_cat, ["Bidders", f"{len(otd_details.get('bidders', []))} participant(s)"])
+                winner_name = otd_details.get('qualifiedBidder')
+                
+                for bidder in otd_details.get('bidders', []):
+                    is_winner = bidder.get('name') == winner_name
+                    display_text = f"{bidder.get('name')} {'✅ Qualified Bidder' if is_winner else ''}"
+                    bidder_item = QTreeWidgetItem(bidders_parent, [display_text, ""])
+                    if is_winner:
+                        font = bidder_item.font(0); font.setBold(True); bidder_item.setFont(0, font)
+                    add_docs(bidder_item, "Submitted Documents", bidder.get('docs', []))
+
         # --- OEM & Vendor ---
         oem_cat = add_category("OEM & Vendor")
         oem_data = project.get('oemVendorDetails', {})
@@ -3312,6 +3356,7 @@ class ProjectCreationPreview(PageFrame):
         add_row(oem_cat, "Vendor Name", oem_data.get('vendorName', 'N/A'))
         add_docs(oem_cat, "OEM/Vendor Documents", oem_data.get('documents', []))
 
+        # ... (rest of the method for Proposals, OEN, BOM, Financials, etc. is unchanged) ...
         # --- Proposals & Orders ---
         prop_cat = add_category("Proposals & Orders")
         prop_data = project.get('proposalOrderDetails', {})
@@ -3336,10 +3381,7 @@ class ProjectCreationPreview(PageFrame):
         if bom.get('items'):
             bom_cat = add_category("Bill of Materials")
             for item in bom['items']:
-                # Create a parent for the whole item
                 item_parent = QTreeWidgetItem(bom_cat, [f"Item #{item.get('sl_no')}", item.get('item')])
-                
-                # Add original details in a table-like format
                 add_row(item_parent, "HSN Code", item.get('hsn', 'N/A'))
                 add_row(item_parent, "Specifications", item.get('specs', 'N/A'))
                 add_row(item_parent, "Original Qty", f"{item.get('qty', 0.0):.2f}")
@@ -3347,32 +3389,20 @@ class ProjectCreationPreview(PageFrame):
                 add_row(item_parent, "GST %", f"{item.get('gstPercent', 0.0):.2f}%")
                 add_row(item_parent, "Original Total Value", f"{item.get('total', 0.0):,.2f}")
                 
-                # Add fulfillment status as a sub-section
                 fulfillment_parent = QTreeWidgetItem(item_parent, ["Fulfillment Status", ""])
                 summary = self._get_bom_item_summary(item)
                 add_row(fulfillment_parent, "  - Fulfilled", f"Qty: {summary.get('fulfilled_qty', 0):.2f}, Value: {summary.get('fulfilled_value', 0):,.2f}")
                 add_row(fulfillment_parent, "  - Pending", f"Qty: {summary.get('pending_qty', 0):.2f}, Value: {summary.get('pending_value', 0):,.2f}")
-        
-            # Add the total amount in words at the end of the category
             add_row(bom_cat, "Total in Words", bom.get('amountInWords', 'N/A'))
 
         # --- Financials & Transactions ---
         fin_cat = add_category("Financials & Transactions")
         fin_data = project.get('financialDetails', {})
-        
-        # NEW: Add summary fields
-        add_row(fin_cat, "Total Billed Amount", f"{self.controller.get_project_bom_total():,.2f}")
-        add_row(fin_cat, "Total Amount Received", f"{fin_data.get('totalAmountReceived', 0.0):,.2f}")
-        add_row(fin_cat, "Total Amount Pending", f"{fin_data.get('totalAmountPending', 0.0):,.2f}")
-        
-        # Use a bold font for the "in words" summary
-        pending_words_item = QTreeWidgetItem(fin_cat, ["Pending Amount in Words", fin_data.get('totalPendingInWords', 'N/A')])
-        font = pending_words_item.font(0); font.setBold(True); pending_words_item.setFont(0, font)
-
         client_payments = QTreeWidgetItem(fin_cat, ["Client Payments", f"{len(fin_data.get('transactions',[]))} transaction(s)"])
         for trans in fin_data.get('transactions', []):
             trans_text = f"{trans.get('transactionDetails')} (Amount: {trans.get('amountReceived', 0):,.2f})"
-            add_row(client_payments, f"Paid on {trans.get('date')}", trans_text)
+            trans_parent = QTreeWidgetItem(client_payments, [f"Paid on {trans.get('date')}", trans_text])
+            add_docs(trans_parent, "Attached Files", trans.get('documents', []))
         
         vendor_payments = QTreeWidgetItem(fin_cat, ["Vendor Payments", f"{len(project.get('vendorPayments',[]))} transaction(s)"])
         for v_pay in project.get('vendorPayments', []):
@@ -3384,10 +3414,7 @@ class ProjectCreationPreview(PageFrame):
         # --- Fulfillment Documents ---
         fulfillment_docs = project.get('fulfillmentDocs', {})
         doc_cat = add_category("Fulfillment Documents")
-        doc_map = {
-            "officeTaxInvoice": "Office Tax Invoices", "deliveryChallan": "Delivery Challans",
-            "installationCertificate": "Installation Certificates", "workCompletionCertificate": "Work Completion Certificates"
-        }
+        doc_map = {"officeTaxInvoice": "Office Tax Invoices", "deliveryChallan": "Delivery Challans", "installationCertificate": "Installation Certificates", "workCompletionCertificate": "Work Completion Certificates"}
         for key, title in doc_map.items():
             if fulfillment_docs.get(key):
                 doc_parent = QTreeWidgetItem(doc_cat, [title, ""])
@@ -3398,7 +3425,9 @@ class ProjectCreationPreview(PageFrame):
 
         self.preview_tree.expandAll()
         self.preview_tree.resizeColumnToContents(0)
+     
 
+        
 # ========================================================================
 # NEW CLASS: UserProfileView
 # ========================================================================
