@@ -1,4 +1,3 @@
-# ui/__init__.py
 # Copyright (C) 2025 Protik Das
 #
 # This program is free software: you can redistribute it and/or modify
