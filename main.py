@@ -12,8 +12,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-# This file marks the 'ui' directory as a Python package.
-# It remains empty as no package-level initialization is required here.
 
 import sys
 import os
@@ -194,6 +192,35 @@ class WorkflowApp(QMainWindow):
         
         if self.current_user_data:
             QTimer.singleShot(0, self.complete_initial_setup)
+
+
+    def get_detailed_status(self, project_data):
+        """Returns a more descriptive status for PENDING projects."""
+        base_status = project_data.get('status', 'PENDING')
+        if base_status != 'PENDING':
+            return base_status
+
+        # Check project milestones in order of progression.
+        # The first one that is missing determines the current pending stage.
+        if project_data.get('isTenderProject') and not project_data.get('tenderDetails', {}).get('qualifiedBidder'):
+            return "Pending: Awaiting Bidder Selection"
+        
+        if project_data.get('isLimitedTenderProject') and not project_data.get('limitedTenderDetails', {}).get('winner'):
+            return "Pending: Awaiting Bidder Selection"
+
+        if not project_data.get('oemVendorDetails', {}).get('price'):
+            return "Pending: Awaiting Vendor Price"
+        
+        if not project_data.get('proposalOrderDetails', {}).get('officeProposalId'):
+            return "Pending: Awaiting Office Proposal"
+        
+        if not project_data.get('proposalOrderDetails', {}).get('departmentWorkOrderId'):
+            return "Pending: Awaiting Dept. Work Order"
+
+        if not project_data.get('billOfMaterials', {}).get('items'):
+            return "Pending: Awaiting Bill of Materials"
+
+        return "Pending: Ready for Fulfillment"    
         
     def create_menu_bar(self):
         menubar = self.menuBar()
@@ -799,6 +826,8 @@ class WorkflowApp(QMainWindow):
         dialog = AboutDialog(self)
         dialog.exec()
 
+    
+    
 
     def load_projects_from_sqlite(self):
         if not self.db_path or not Path(self.db_path).exists():
