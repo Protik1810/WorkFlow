@@ -12,8 +12,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-# This file marks the 'ui' directory as a Python package.
-# It remains empty as no package-level initialization is required here.
+
 
 import sys
 import shutil
